@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import DeltaDialog, { DeltaDialogBody, DeltaDialogFooter, DeltaDialogContent } from './DeltaDialog'
-import { DeltaButtonPrimary } from './SmallDialog'
 import { Classes } from '@blueprintjs/core'
 import { DeltaBackend } from '../../delta-remote'
 import { FullChat } from '../../../shared/shared-types'
@@ -60,12 +59,9 @@ export default function EphemeralMessage ({
       </DeltaDialogBody>
       <DeltaDialogFooter>
         <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-          <DeltaButtonPrimary
-            noPadding
-            onClick={onClickOk}
-          >
+          <p className='delta-button primary'>
             {tx('ok')}
-          </DeltaButtonPrimary>
+          </p>
         </div>
       </DeltaDialogFooter>
     </DeltaDialog>
