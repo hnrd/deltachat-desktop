@@ -17,6 +17,7 @@ import AlertDialog from './AlertDialog'
 import ConfirmationDialog from './ConfirmationDialog'
 import UnblockContacts from './UnblockContacts'
 import MuteChat from './MuteChat'
+import EphemeralMessage from './EphemeralMessage'
 import { AppState } from '../../../shared/shared-types'
 import { getLogger } from '../../../shared/logger'
 
@@ -39,6 +40,7 @@ export const allDialogs: { [key: string]: any } = {
   AlertDialog,
   UnblockContacts,
   MuteChat,
+  EphemeralMessage
 }
 
 export type DialogId = keyof typeof allDialogs | string
@@ -90,7 +92,7 @@ export default class DialogController extends React.Component<
   ) {
     if (typeof fnc === 'string') {
       fnc = allDialogs[fnc]
-      if (!fnc) throw new Error(`Dialog with name ${name} does not exist`)
+      if (!fnc) throw new Error(`Dialog with name ${fnc} does not exist`)
     }
 
     if (!additionalProps) additionalProps = {}
