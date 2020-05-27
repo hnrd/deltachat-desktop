@@ -104,11 +104,11 @@ export default class DCChat extends SplitOut {
     this._dc.markNoticedChat(chatId)
   }
 
-  getChatAutodeleteTimer (chatId: number) {
+  getChatAutodeleteTimer(chatId: number) {
     return this._dc.getChatAutodeleteTimer(chatId)
   }
 
-  setChatAutodeleteTimer (chatId:number, timer:number) {
+  setChatAutodeleteTimer(chatId: number, timer: number) {
     return this._dc.setChatAutodeleteTimer(chatId, timer)
   }
 }

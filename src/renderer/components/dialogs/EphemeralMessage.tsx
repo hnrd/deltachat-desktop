@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import DeltaDialog, { DeltaDialogBody, DeltaDialogFooter, DeltaDialogContent, SmallDialog, DeltaDialogHeader } from './DeltaDialog'
+import DeltaDialog, {
+  DeltaDialogBody,
+  DeltaDialogFooter,
+  DeltaDialogContent,
+  SmallDialog,
+  DeltaDialogHeader,
+} from './DeltaDialog'
 import { Classes, RadioGroup, Radio } from '@blueprintjs/core'
 import { DeltaBackend } from '../../delta-remote'
 import { FullChat } from '../../../shared/shared-types'
@@ -20,7 +26,9 @@ function SelectEphemeralMessageDuration({
   onSelectEphemeralMessageDuration,
   ephemeralMessageDuration,
 }: {
-  onSelectEphemeralMessageDuration: (ephemeralMessageDuration: EphemeralMessageDuration) => void
+  onSelectEphemeralMessageDuration: (
+    ephemeralMessageDuration: EphemeralMessageDuration
+  ) => void
   ephemeralMessageDuration: EphemeralMessageDuration
 }) {
   const tx = window.translate
@@ -30,9 +38,11 @@ function SelectEphemeralMessageDuration({
     onSelectEphemeralMessageDuration(ephemeralMessageDuration)
   }
 
-
   return (
-    <RadioGroup onChange={onChange} selectedValue={String(ephemeralMessageDuration)}>
+    <RadioGroup
+      onChange={onChange}
+      selectedValue={String(ephemeralMessageDuration)}
+    >
       <Radio
         key={'eph-0'}
         label={tx('off')}
@@ -72,8 +82,7 @@ function SelectEphemeralMessageDuration({
   )
 }
 
-
-export default function EphemeralMessage ({
+export default function EphemeralMessage({
   isOpen,
   onClose,
   chatId,
@@ -82,52 +91,60 @@ export default function EphemeralMessage ({
   onClose: () => void
   chatId: number
 }) {
-  const [ephemeralMessageDuration, setEphemeralMessageDuration] = useState<EphemeralMessageDuration>(
-    EphemeralMessageDuration.OFF
-  )
+  const [ephemeralMessageDuration, setEphemeralMessageDuration] = useState<
+    EphemeralMessageDuration
+  >(EphemeralMessageDuration.OFF)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    (async () => {
-      const autodeleteTimer = await DeltaBackend.call('chat.getChatAutodeleteTimer', chatId)
+    ;(async () => {
+      const autodeleteTimer = await DeltaBackend.call(
+        'chat.getChatAutodeleteTimer',
+        chatId
+      )
       setEphemeralMessageDuration(autodeleteTimer)
       setLoading(false)
     })()
   }, [])
 
   const saveAndClose = async () => {
-    await DeltaBackend.call('chat.setChatAutodeleteTimer', chatId, ephemeralMessageDuration)
+    await DeltaBackend.call(
+      'chat.setChatAutodeleteTimer',
+      chatId,
+      ephemeralMessageDuration
+    )
     onClose()
   }
 
   const tx = window.translate
   return (
-    !loading &&
-    <SmallDialog isOpen={isOpen} onClose={onClose}>
-      <DeltaDialogHeader title={'Ephemeral Message'} />
-      <DeltaDialogBody>
-        <DeltaDialogContent>
-          <SelectEphemeralMessageDuration
-            ephemeralMessageDuration={ephemeralMessageDuration}
-            onSelectEphemeralMessageDuration={setEphemeralMessageDuration}
-          />
-        </DeltaDialogContent>
-      </DeltaDialogBody>
-      <DeltaDialogFooter
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginTop: '0px',
-          padding: '7px 13px 10px 13px',
-        }}
-      >
-        <p className='delta-button danger bold' onClick={onClose}>
-          {tx('cancel')}
-        </p>
-        <p className='delta-button primary bold' onClick={saveAndClose}>
-          {tx('save_desktop')}
-        </p>
-      </DeltaDialogFooter>
-    </SmallDialog>
+    !loading && (
+      <SmallDialog isOpen={isOpen} onClose={onClose}>
+        <DeltaDialogHeader title={'Ephemeral Message'} />
+        <DeltaDialogBody>
+          <DeltaDialogContent>
+            <SelectEphemeralMessageDuration
+              ephemeralMessageDuration={ephemeralMessageDuration}
+              onSelectEphemeralMessageDuration={setEphemeralMessageDuration}
+            />
+          </DeltaDialogContent>
+        </DeltaDialogBody>
+        <DeltaDialogFooter
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '0px',
+            padding: '7px 13px 10px 13px',
+          }}
+        >
+          <p className='delta-button danger bold' onClick={onClose}>
+            {tx('cancel')}
+          </p>
+          <p className='delta-button primary bold' onClick={saveAndClose}>
+            {tx('save_desktop')}
+          </p>
+        </DeltaDialogFooter>
+      </SmallDialog>
+    )
   )
 }

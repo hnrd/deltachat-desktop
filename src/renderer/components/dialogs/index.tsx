@@ -36,7 +36,7 @@ export const allDialogs = {
   ImportQrCode,
   ConfirmationDialog,
   UnblockContacts,
-  EphemeralMessage
+  EphemeralMessage,
 }
 
 export type DialogId = keyof typeof allDialogs

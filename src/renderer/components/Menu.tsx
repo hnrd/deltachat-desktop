@@ -55,7 +55,8 @@ export default function DeltaMenu(props: { selectedChat: FullChat }) {
     screenContext.openDialog('UnblockContacts', {})
   const onContactRequests = () =>
     chatStoreDispatch({ type: 'SELECT_CHAT', payload: C.DC_CHAT_ID_DEADDROP })
-  const onEphemeralMessage = () => screenContext.openDialog('EphemeralMessage', { chatId: selectedChat.id })
+  const onEphemeralMessage = () =>
+    screenContext.openDialog('EphemeralMessage', { chatId: selectedChat.id })
   const logout = () => {
     if (selectedChat) {
       chatStoreDispatch({ type: 'UI_UNSELECT_CHAT' })
@@ -134,10 +135,10 @@ export default function DeltaMenu(props: { selectedChat: FullChat }) {
         text={'Ephemeral Message'} // TODO: Translate
         onClick={onEphemeralMessage}
       />,
-      <Menu.Divider key="divider-2"/>
+      <Menu.Divider key='divider-2' />,
     ]
   } else {
-    chatMenu = <Menu.Divider key="divider-3" />
+    chatMenu = <Menu.Divider key='divider-3' />
   }
 
   return (
