@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import DeltaDialog, {
+import {
   DeltaDialogBody,
   DeltaDialogFooter,
   DeltaDialogContent,
   SmallDialog,
   DeltaDialogHeader,
 } from './DeltaDialog'
-import { Classes, RadioGroup, Radio } from '@blueprintjs/core'
+import { RadioGroup, Radio } from '@blueprintjs/core'
 import { DeltaBackend } from '../../delta-remote'
-import { FullChat } from '../../../shared/shared-types'
-import { Timespans, MuteDuration } from '../../../shared/constants'
-import { SelectMuteDuration } from './MuteChat'
+import { Timespans } from '../../../shared/constants'
 
 enum EphemeralMessageDuration {
   OFF = Timespans.ZERO_SECONDS,

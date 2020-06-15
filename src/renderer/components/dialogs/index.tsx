@@ -3,7 +3,6 @@ import MessageDetail from './MessageDetail'
 import FullscreenMedia from './FullscreenMedia'
 import DeadDrop from './DeadDrop'
 import EnterAutocryptSetupMessage from './EnterAutocryptSetupMessage'
-import ImexProgress from './ImexProgress'
 import About from './About'
 import Settings from './Settings'
 import ForwardMessage from './ForwardMessage'
@@ -23,7 +22,6 @@ export const allDialogs = {
   FullscreenMedia,
   MessageDetail,
   EnterAutocryptSetupMessage,
-  ImexProgress,
   About,
   Settings,
   ForwardMessage,
