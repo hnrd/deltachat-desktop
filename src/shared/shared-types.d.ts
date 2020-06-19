@@ -155,6 +155,7 @@ export interface MessageType {
   contact: DCContact
   isInfo: boolean
   setupCodeBegin?: string
+  isCall:boolean
 }
 
 export type DCContact = Omit<JsonContact, 'color'> & { color: string }
