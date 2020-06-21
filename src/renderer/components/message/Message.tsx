@@ -11,7 +11,6 @@ import { MessageType, DCContact } from '../../../shared/shared-types'
 import { attachment, isGenericAttachment } from '../attachment/Attachment'
 import { runtime } from '../../runtime'
 
-
 const { openExternal } = window.electron_functions
 
 type msgStatus = 'error' | 'sending' | 'draft' | 'delivered' | 'read' | ''
@@ -181,14 +180,14 @@ const contextMenu = (
           {tx('menu_copy_selection_to_clipboard')}
         </MenuItem>
       ) : (
-          <MenuItem
-            onClick={_ => {
-              navigator.clipboard.writeText(text)
-            }}
-          >
-            {tx('menu_copy_to_clipboard')}
-          </MenuItem>
-        )}
+        <MenuItem
+          onClick={_ => {
+            navigator.clipboard.writeText(text)
+          }}
+        >
+          {tx('menu_copy_to_clipboard')}
+        </MenuItem>
+      )}
       {attachment ? (
         <MenuItem onClick={onDownload.bind(null, message.msg)}>
           {tx('download_attachment_desktop')}
@@ -314,8 +313,8 @@ const Message = (props: {
             {message.msg.isSetupmessage ? (
               tx('autocrypt_asm_click_body')
             ) : (
-                <MessageBody text={text || ''} />
-              )}
+              <MessageBody text={text || ''} />
+            )}
           </div>
           {longMessage && <button onClick={onShowDetail}>...</button>}
           <MessageMetaData {...props} />
@@ -333,7 +332,6 @@ const Message = (props: {
 }
 
 export default Message
-
 
 export const CallMessage = (props: {
   direction: 'incoming' | 'outgoing'
@@ -367,8 +365,8 @@ export const CallMessage = (props: {
   } = props
   const tx = window.translate
 
-  let url = text.split("::").length > 2 ? text.split("::")[2] : "NA";
-
+  const roomname = text.split('::').length > 2 ? text.split('::')[2] : 'NA'
+  const url = 'https://cloud13.de/p2p?roomname=' + roomname
   return (
     <div
       className={classNames(
@@ -388,9 +386,7 @@ export const CallMessage = (props: {
         {direction === 'incoming' &&
           conversationType === 'group' &&
           Author(message.contact, onContactClick)}
-        <div
-          className={classNames('msg-body',)}
-        >
+        <div className={classNames('msg-body')}>
           <Attachment
             {...{
               attachment,
@@ -401,21 +397,36 @@ export const CallMessage = (props: {
             }}
           />
 
-          {direction === 'incoming' ?
+          {direction === 'incoming' ? (
             <div dir='auto' className='text'>
-              <div className='call-inc-text'><b>Call invitation!</b>
+              <div className='call-inc-text'>
+                <b>Call invitation!</b>
                 <div>
-                  <button className='phone-accept-button' onClick={openCall.bind(null, url)}><span className='phone-enabled-icon'></span></button>
-                  <button className='phone-deny-button' onClick={denyCall}><span className='phone-disabled-icon'></span></button>
+                  <button
+                    className='phone-accept-button'
+                    onClick={openCall.bind(null, roomname)}
+                  >
+                    <span className='phone-enabled-icon'></span>
+                  </button>
+                  <button className='phone-deny-button' onClick={denyCall}>
+                    <span className='phone-disabled-icon'></span>
+                  </button>
                 </div>
-                <a onClick={() => { openCallExternal(url) }} href="{url}">{url}</a>
+                <a
+                  onClick={() => {
+                    openCallExternal(url)
+                  }}
+                  href=''
+                >
+                  {url}
+                </a>
               </div>
             </div>
-            :
+          ) : (
             <div dir='auto' className='text'>
               <b>Call invitation send!</b>
             </div>
-          }
+          )}
 
           <MessageMetaData {...props} />
         </div>
@@ -424,13 +435,13 @@ export const CallMessage = (props: {
   )
 }
 
-const openCall = (callURL:string) => {
-  console.log("JOJOJO")!
-  runtime.openCallWindow(callURL)
+const openCall = (roomname: string) => {
+  console.log('JOJOJO')!
+  runtime.openCallWindow(roomname)
 }
 
 const denyCall = () => {
-  console.log("NONO")!
+  console.log('NONO')!
 }
 
 const openCallExternal = (url: string) => {
